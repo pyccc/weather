@@ -9,41 +9,25 @@ import { WeatherService } from '../services/weather.service';
   styleUrls: ['./weather-table.component.css'],
 })
 export class WeatherTableComponent implements OnInit {
-  //User can do sorting by date and filter by any field
-  lineSparklineOptions = {
-    type: 'line',
-    line: {
-      stroke: 'rgb(124,255,178)',
-      strokeWidth: 2
-    },
-    padding: {
-      top:5,
-      bottome:5
-    },
-    marker: {
-      size: 3,
-      shape: 'diamond'
-    },
-    highlightStyle: {
-      size:10
-    }
-  };
-  
+  //User can do sorting by date and filter by any field  
   columnDefs = [
     { headerName: 'Date', field: 'date', sortable: true, filter: true },
     { headerName: 'Forecast', field: 'forecast', filter: true },
-    { headerName: 'Temperature', field: 'temperature.high', filter: true },
+    { headerName: 'Temperature', valueGetter: (params) => {
+      return params.data.temperature.low + '   ~   ' + params.data.temperature.high
+    }, filter: true },
+    { headerName: 'Relative Humidity', valueGetter: (params) => {
+      return params.data.relative_humidity.low + '   ~   ' + params.data.relative_humidity.high
+    }, filter: true },
+    { headerName: 'Wind Direction', field: 'wind.direction', filter: true },
+    { headerName: 'Wind Speed', valueGetter: (params) => {
+      return params.data.wind.speed.low + '   ~   ' + params.data.wind.speed.high
+    }, filter: true },
+    
     {
       headerValueGetter: (params) => {
         return '[' + params.colDef.field + ']';
       },field: 'temperature.low'
-    },
-    {
-      field:'temperatures',
-      cellRenderer:'agSparklineCellRenderer',
-      cellRendererParams: {
-        sparklineOptions: this.lineSparklineOptions
-      }
     }
   ];
 
@@ -60,7 +44,7 @@ export class WeatherTableComponent implements OnInit {
       //   value.temperatures.push(value.temperature.high);
       //   value.temperatures.push(value.temperature.low);
       // });
-      console.log(data.items[0].forecasts);
+      console.log(data);
     });
     
   }
