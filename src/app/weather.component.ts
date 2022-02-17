@@ -14,8 +14,9 @@ export class WeatherComponent {
 
   ngOnInit() {
     this.weatherService.getWeather().subscribe((data) => {
-      console.log(data);
+      
       this.name = data;
+      console.log(this.name.items[0].forecasts[0]);
     });
   }
 }
