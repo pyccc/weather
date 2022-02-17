@@ -6,6 +6,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { WeatherDataWrapper } from '../models/weather-data-wrapper';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class WeatherService {
   //private getWeather(): Observable<any> {
   public getWeather(): Observable<any> {
     return this.httpClient
-      .get<any>(
+      .get<WeatherDataWrapper>(
         'https://api.data.gov.sg/v1/environment/4-day-weather-forecast',
         {
           headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
