@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { WeatherDataWrapper } from '../models/weather-data-wrapper';
+import { Forecast } from '../models/forecast';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,11 @@ import { WeatherDataWrapper } from '../models/weather-data-wrapper';
 export class WeatherService {
   constructor(private httpClient: HttpClient) {}
 
-  //private getWeather(): Observable<any> {
-  public getWeather(): Observable<any> {
+  public getWeather(startDate: Date): Observable<any> {
+    startDate = new Date("2021-06-29");
     return this.httpClient
       .get<WeatherDataWrapper>(
-        'https://api.data.gov.sg/v1/environment/4-day-weather-forecast',
+        'https://api.data.gov.sg/v1/environment/4-day-weather-forecast?date='+startDate.toISOString().split('T')[0],
         {
           headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
         }

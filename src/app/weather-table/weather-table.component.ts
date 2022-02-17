@@ -38,8 +38,10 @@ export class WeatherTableComponent implements OnInit {
   constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
-    this.weatherService.getWeather().subscribe((data) => {
-      this.rowData = data.items[0].forecasts;
+    //this.rowData = this.get30DaysWeather(new Date());
+    this.weatherService.getWeather(new Date()).subscribe((data) => {
+      //only use the data with newest timestamp
+      this.rowData = data.items[data.items.length-1].forecasts;
       // this.rowData.forEach((value)=>{
       //   value.temperatures.push(value.temperature.high);
       //   value.temperatures.push(value.temperature.low);
@@ -48,4 +50,16 @@ export class WeatherTableComponent implements OnInit {
     });
     
   }
+  
+  public get30DaysWeather(startDate: Date): Forecast[]{
+    let result = [];
+
+    for(let i =0; i<=7; i++){
+      this.weatherService.getWeather(startDate);
+      i===7?startDate.setDate(startDate.getDate()+4):startDate.setDate(startDate.getDate()+2);
+    }
+
+    return result;
+  }
+
 }
