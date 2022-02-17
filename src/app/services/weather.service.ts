@@ -15,8 +15,8 @@ import { Forecast } from '../models/forecast';
 export class WeatherService {
   constructor(private httpClient: HttpClient) {}
 
-  public getWeather(startDate: Date): Observable<any> {
-    startDate = new Date("2021-06-29");
+  public getWeather(startDate: Date): Observable<WeatherDataWrapper> {
+    console.log('start Date: '+startDate);
     return this.httpClient
       .get<WeatherDataWrapper>(
         'https://api.data.gov.sg/v1/environment/4-day-weather-forecast?date='+startDate.toISOString().split('T')[0],

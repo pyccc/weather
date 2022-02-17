@@ -13,10 +13,6 @@ export class WeatherComponent {
   constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
-    this.weatherService.getWeather().subscribe((data) => {
-      
-      this.name = data;
-      //console.log(this.name.items[0].forecasts[0]);
-    });
+    
   }
 }
