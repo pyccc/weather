@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { WeatherDataWrapper } from './models/weather-data-wrapper';
 import { WeatherService } from './services/weather.service';
 
 @Component({
@@ -7,14 +8,14 @@ import { WeatherService } from './services/weather.service';
   styles: [`h1 { font-family: Lato; }`],
 })
 export class WeatherComponent {
-  @Input() name: {};
+  @Input() name: WeatherDataWrapper;
 
   constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
     this.weatherService.getWeather().subscribe((data) => {
       console.log(data);
-      this.name = data.items[0].timestamp;
+      this.name = data;
     });
   }
 }
