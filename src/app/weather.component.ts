@@ -16,7 +16,7 @@ export class WeatherComponent {
     this.weatherService.getWeather().subscribe((data) => {
       
       this.name = data;
-      console.log(this.name.items[0].forecasts[0]);
+      //console.log(this.name.items[0].forecasts[0]);
     });
   }
 }

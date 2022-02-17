@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { WeatherDataWrapper } from '../models/weather-data-wrapper';
+import { WeatherService } from '../services/weather.service';
+
+
 
 @Component({
   selector: 'app-weather-chart',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WeatherChartComponent implements OnInit {
 
-  constructor() { }
+  @Input() name: WeatherDataWrapper;
+
+  constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
+    this.weatherService.getWeather().subscribe((data) => {
+      
+      this.name = data;
+      //console.log(this.name.items[0].forecasts[0]);
+    });
   }
 
 }
