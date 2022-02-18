@@ -8,7 +8,6 @@ import { zip } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  name = 'Angular';
   forecasts = [];
 
   constructor(private weatherService: WeatherService) {}
@@ -67,6 +66,10 @@ export class AppComponent {
           ? res8.items[res8.items.length - 1].forecasts.reverse()
           : []
       );
+
+      // this.forecasts.forEach({
+
+      // })
     });
   }
   

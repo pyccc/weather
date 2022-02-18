@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Highcharts=require('highcharts');
-import { WeatherDataWrapper } from '../models/weather-data-wrapper';
+import { Forecast } from '../models/forecast';
 import { WeatherService } from '../services/weather.service';
 
 
@@ -12,72 +12,49 @@ import { WeatherService } from '../services/weather.service';
 })
 export class WeatherChartComponent implements OnInit {
 
-  @Input() name: WeatherDataWrapper;
+  @Input() chartData: Forecast[];
 
   constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
+      let xCat = [];
+      this.chartData.forEach(
+          xCat.push(this.chartData.date);
+      );
     Highcharts.chart('container', {
-
-      title: {
-          text: 'Solar Employment Growth by Sector, 2010-2016'
-      },
-  
-      subtitle: {
-          text: 'Source: thesolarfoundation.com'
-      },
-  
-      yAxis: {
-          title: {
-              text: 'Number of Employees'
-          }
-      },
-  
-      xAxis: {
-          accessibility: {
-              rangeDescription: 'Range: 2010 to 2017'
-          }
-      },
-  
-      legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
-      },
-  
-      plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              },
-              pointStart: 2010
-          }
-      },
-  
-      series: [{
-          name: 'Low Humidity',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-          name: 'High Humidity',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }],
-  
-      responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              chartOptions: {
-                  legend: {
-                      layout: 'horizontal',
-                      align: 'center',
-                      verticalAlign: 'bottom'
-                  }
-              }
-          }]
-      }
-  
-  });
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Monthly Average Temperature'
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com'
+        },
+        xAxis: {
+            categories: xCat
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
   }
 
 }

@@ -7,7 +7,13 @@ import { zip } from 'rxjs';
   templateUrl: './weather-table.component.html',
   styleUrls: ['./weather-table.component.css'],
 })
+
 export class WeatherTableComponent implements OnInit {
+
+  
+  @Input() rowData = [];
+
+  
   columnDefs = [
     { headerName: 'Date', field: 'date', sortable: true, filter: true },
     { headerName: 'Forecast', field: 'forecast', sortable: true, filter: true },
@@ -52,8 +58,6 @@ export class WeatherTableComponent implements OnInit {
     //   field: 'temperature.low',
     // },
   ];
-
-  @Input() rowData = [];
 
   constructor(public weatherService: WeatherService) {}
 
