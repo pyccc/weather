@@ -1,59 +1,70 @@
-import { Component, Input, OnInit } from '@angular/core';
-import Highcharts=require('highcharts');
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import Highcharts = require('highcharts');
 import { Forecast } from '../models/forecast';
 import { WeatherService } from '../services/weather.service';
-
-
 
 @Component({
   selector: 'app-weather-chart',
   templateUrl: './weather-chart.component.html',
-  styleUrls: ['./weather-chart.component.css']
+  styleUrls: ['./weather-chart.component.css'],
 })
-export class WeatherChartComponent implements OnInit {
-
+export class WeatherChartComponent implements OnChanges {
   @Input() chartData: Forecast[];
 
   constructor(public weatherService: WeatherService) {}
 
-  ngOnInit() {
-      let xCat = [];
-      this.chartData.forEach(
-          xCat.push(this.chartData.date);
-      );
+  ngOnChanges() {
+      
+    console.log(this.chartData);
+
+    let xCat = [];
+    let tempSeries = [{
+        name: 'High',
+        data: [],
+      },
+      {
+        name: 'Low',
+        data: [],
+      }];
+      let subtitle = "";
+
+      while(this.chartData!=[]){
+        subtitle = this.chartData[this.chartData.length-1].date + " TO " + this.chartData[0].date;
+        this.chartData.forEach((value) => {
+          xCat.unshift(value.date);
+          tempSeries[0].data.unshift(value.temperature.high);
+          tempSeries[1].data.unshift(value.temperature.low);
+        });
+      }
+    
+
     Highcharts.chart('container', {
-        chart: {
-            type: 'line'
-        },
+      chart: {
+        type: 'line',
+      },
+      title: {
+        text: 'Temperature Chart',
+      },
+      subtitle: {
+        text: subtitle,
+      },
+      xAxis: {
+        categories: xCat,
+      },
+      yAxis: {
         title: {
-            text: 'Monthly Average Temperature'
+          text: 'Temperature (°C)',
         },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
+      },
+      plotOptions: {
+        line: {
+          dataLabels: {
+            enabled: true,
+          },
+          enableMouseTracking: true,
         },
-        xAxis: {
-            categories: xCat
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (°C)'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
+      },
+      series: tempSeries
     });
   }
 

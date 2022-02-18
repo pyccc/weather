@@ -1,19 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
 import { zip } from 'rxjs';
+import { Forecast } from '../models/forecast';
 
 @Component({
   selector: 'app-weather-table',
   templateUrl: './weather-table.component.html',
   styleUrls: ['./weather-table.component.css'],
 })
-
 export class WeatherTableComponent implements OnInit {
+  @Input() rowData : Forecast[];
 
-  
-  @Input() rowData = [];
-
-  
   columnDefs = [
     { headerName: 'Date', field: 'date', sortable: true, filter: true },
     { headerName: 'Forecast', field: 'forecast', sortable: true, filter: true },
@@ -61,7 +58,5 @@ export class WeatherTableComponent implements OnInit {
 
   constructor(public weatherService: WeatherService) {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 }
