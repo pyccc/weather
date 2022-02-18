@@ -1,8 +1,13 @@
 <ag-grid-angular
-  style=" height: 500px"
-  class="ag-theme-balham"
+  style=" height: 100%; width: 100%;"
+  class="ag-theme-alpine"
+  headerHeight=80
   [rowData]="rowData"
   [columnDefs]="columnDefs"
+  (firstDataRendered)="onFirstDataRendered($event)"
+  tooltipShowDelay=0
+  tooltipHideDelay=2000
+  skipHeaderOnAutoSize=true
 ></ag-grid-angular>
 
 <div id="myGrid" class="ag-theme-alpine" style="height: 100%"></div>

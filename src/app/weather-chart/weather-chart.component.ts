@@ -19,8 +19,8 @@ export class WeatherChartComponent implements OnChanges {
     let xCat = [];
     let humidityHigh = [];
     let humidityLow = [];
-    let TempHigh = [];
-    let TempLow = [];
+    let tempHigh = [];
+    let tempLow = [];
 
     let subtitle = '';
 
@@ -32,8 +32,8 @@ export class WeatherChartComponent implements OnChanges {
       this.chartData.forEach((value) => {
         xCat.unshift(value.date.split('-')[1] + '-' + value.date.split('-')[2]);
 
-        TempHigh.unshift(value.temperature.high);
-        TempLow.unshift(value.temperature.low);
+        tempHigh.unshift(value.temperature.high);
+        tempLow.unshift(value.temperature.low);
 
         humidityHigh.unshift(value.relative_humidity.high);
         humidityLow.unshift(value.relative_humidity.low);
@@ -71,12 +71,12 @@ export class WeatherChartComponent implements OnChanges {
         {
           name: 'High',
           type: 'line',
-          data: humidityHigh,
+          data: humidityHigh
         },
         {
           name: 'Low',
           type: 'line',
-          data: humidityLow,
+          data: humidityLow
         },
       ],
     });
@@ -112,12 +112,14 @@ export class WeatherChartComponent implements OnChanges {
         {
           name: 'High',
           type: 'line',
-          data: TempHigh,
+          data: tempHigh,
+          color: 'red'
         },
         {
           name: 'Low',
           type: 'line',
-          data: TempLow,
+          data: tempLow,
+          color: 'orange'
         },
       ],
     });

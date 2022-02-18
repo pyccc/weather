@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
-import { zip } from 'rxjs';
 import { Forecast } from '../models/forecast';
+import { FirstDataRenderedEvent, GridApi } from 'ag-grid-community';
 
 @Component({
   selector: 'app-weather-table',
@@ -11,9 +11,11 @@ import { Forecast } from '../models/forecast';
 export class WeatherTableComponent implements OnInit {
   @Input() rowData : Forecast[];
 
+  private gridApi!: GridApi;
+
   columnDefs = [
-    { headerName: 'Date', field: 'date', sortable: true, filter: true },
-    { headerName: 'Forecast', field: 'forecast', sortable: true, filter: true },
+    { headerName: 'Date', width: 150,field: 'date', sortable: true, filter: true ,resizable: true},
+    { headerName: 'Forecast', field: 'forecast', tooltipField: 'forecast',sortable: true, filter: true,resizable: true },
     {
       headerName: 'Temperature / °C',
       valueGetter: (params) => {
@@ -23,9 +25,10 @@ export class WeatherTableComponent implements OnInit {
       },
       sortable: true,
       filter: true,
+      resizable: true
     },
     {
-      headerName: 'Relative Humidity / %',
+      headerName: 'Humidity / %',
       valueGetter: (params) => {
         return (
           params.data.relative_humidity.low +
@@ -35,8 +38,9 @@ export class WeatherTableComponent implements OnInit {
       },
       sortable: true,
       filter: true,
+      resizable: true
     },
-    { headerName: 'Wind Direction', field: 'wind.direction', sortable: true, filter: true },
+    { headerName: 'Wind Direction', field: 'wind.direction', sortable: true, filter: true,resizable: true },
     {
       headerName: 'Wind Speed / KM/h',
       valueGetter: (params) => {
@@ -46,6 +50,7 @@ export class WeatherTableComponent implements OnInit {
       },
       sortable: true,
       filter: true,
+      resizable: true
     },
 
     // {
@@ -58,5 +63,11 @@ export class WeatherTableComponent implements OnInit {
 
   constructor(public weatherService: WeatherService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  onFirstDataRendered(params: FirstDataRenderedEvent) {
+    params.api.sizeColumnsToFit();
+  }
 }
