@@ -36,7 +36,7 @@ export class WeatherTableComponent implements OnInit {
       sortable: true,
       filter: true,
     },
-    { headerName: 'Wind Direction', field: 'wind.direction', filter: true },
+    { headerName: 'Wind Direction', field: 'wind.direction', sortable: true, filter: true },
     {
       headerName: 'Wind Speed / KM/h',
       valueGetter: (params) => {

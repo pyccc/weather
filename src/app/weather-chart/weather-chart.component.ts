@@ -14,36 +14,80 @@ export class WeatherChartComponent implements OnChanges {
   constructor(public weatherService: WeatherService) {}
 
   ngOnChanges() {
-      
     console.log(this.chartData);
 
     let xCat = [];
-    let tempSeries = [{
-        name: 'High',
-        data: [],
-      },
-      {
-        name: 'Low',
-        data: [],
-      }];
-      let subtitle = "";
+    let humidityHigh = [];
+    let humidityLow = [];
+    let TempHigh = [];
+    let TempLow = [];
 
-      while(this.chartData!=[]){
-        subtitle = this.chartData[this.chartData.length-1].date + " TO " + this.chartData[0].date;
-        this.chartData.forEach((value) => {
-          xCat.unshift(value.date);
-          tempSeries[0].data.unshift(value.temperature.high);
-          tempSeries[1].data.unshift(value.temperature.low);
-        });
-      }
-    
+    let subtitle = '';
 
-    Highcharts.chart('container', {
+    if (this.chartData.length) {
+      subtitle =
+        this.chartData[this.chartData.length - 1].date +
+        ' TO ' +
+        this.chartData[0].date;
+      this.chartData.forEach((value) => {
+        xCat.unshift(value.date.split('-')[1] + '-' + value.date.split('-')[2]);
+
+        TempHigh.unshift(value.temperature.high);
+        TempLow.unshift(value.temperature.low);
+
+        humidityHigh.unshift(value.relative_humidity.high);
+        humidityLow.unshift(value.relative_humidity.low);
+      });
+    }
+
+    Highcharts.chart({
       chart: {
+        renderTo: 'humidityContainer',
         type: 'line',
       },
       title: {
-        text: 'Temperature Chart',
+        text: 'Humidity Trend',
+      },
+      subtitle: {
+        text: subtitle,
+      },
+      xAxis: {
+        categories: xCat,
+      },
+      yAxis: {
+        title: {
+          text: 'Humidity (%)',
+        },
+      },
+      plotOptions: {
+        line: {
+          dataLabels: {
+            enabled: true,
+          },
+          enableMouseTracking: true,
+        },
+      },
+      series: [
+        {
+          name: 'High',
+          type: 'line',
+          data: humidityHigh,
+        },
+        {
+          name: 'Low',
+          type: 'line',
+          data: humidityLow,
+        },
+      ],
+    });
+
+    Highcharts.chart({
+      chart: {
+        renderTo: 'tempContainer',
+        type: 'line',
+      },
+      title: {
+        text: 'Temperature Trend',
       },
       subtitle: {
         text: subtitle,
@@ -64,8 +108,18 @@ export class WeatherChartComponent implements OnChanges {
           enableMouseTracking: true,
         },
       },
-      series: tempSeries
+      series: [
+        {
+          name: 'High',
+          type: 'line',
+          data: TempHigh,
+        },
+        {
+          name: 'Low',
+          type: 'line',
+          data: TempLow,
+        },
+      ],
     });
   }
-
 }
