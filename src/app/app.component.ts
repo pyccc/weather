@@ -12,11 +12,11 @@ export class AppComponent {
 
   constructor(private weatherService: WeatherService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.get30DaysWeather(new Date());
   }
 
-  get30DaysWeather(date: Date){
+  get30DaysWeather(date: Date) {
     zip(
       this.weatherService.getWeather(date),
       this.weatherService.getWeather(
@@ -68,12 +68,10 @@ export class AppComponent {
       );
     });
   }
-  
-  refresh(){
+
+  refresh() {
     console.log(this.forecasts);
     this.forecasts = [];
     console.log(this.forecasts);
   }
-
-
 }
