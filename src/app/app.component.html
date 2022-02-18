@@ -17,6 +17,32 @@
 
     <div class="container-fluid">
       <div class="row">
+        <div class="col-lg-8">
+          <form class="row row-cols-sm-auto">
+            <div class="col-12">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
+                  [(ngModel)]="model"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                />
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+          </form>
+
+          <hr />
+          <pre>Model: {{ date | json }}</pre>
+        </div>
         <button
           type="button"
           class="btn btn-outline-primary btn-lg"

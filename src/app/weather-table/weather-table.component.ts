@@ -64,7 +64,6 @@ export class WeatherTableComponent implements OnInit {
   constructor(public weatherService: WeatherService) {}
 
   ngOnInit() {
-    this.gridApi.sizeColumnsToFit();
   }
 
   onFirstDataRendered(params: FirstDataRenderedEvent) {

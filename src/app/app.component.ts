@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { zip } from 'rxjs';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { mainDiagnosticsForTest } from '@angular/compiler-cli/src/main';
 
 @Component({
   selector: 'my-app',
@@ -10,10 +12,20 @@ import { zip } from 'rxjs';
 export class AppComponent {
   forecasts = [];
 
+  date: NgbDateStruct;
+
+  minDate = { year: 2016, month: 3, day: 20 };
+  maxDate = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  };
+
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit() {
     this.get30DaysWeather(new Date());
+    console.log(this.maxDate);
   }
 
   get30DaysWeather(date: Date) {
