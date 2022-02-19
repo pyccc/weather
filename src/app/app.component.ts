@@ -30,9 +30,9 @@ export class AppComponent {
 
   get30DaysWeather(date: Date) {
     // while(this.forecasts.length<30){
-    //   this.forecasts.concat(this.forecasts,this.weatherService.getWeather(new Date(date.setDate(date.getDate() - 4))));
+    // this.forecasts.concat(this.forecasts);
     // }
-    
+
     zip(
       this.weatherService.getWeather(
         new Date(date.setDate(date.getDate() - 4))
@@ -105,11 +105,21 @@ export class AppComponent {
 
   changeDate(event: any) {
     this.get30DaysWeather(
-      new Date(this.datepick.year, this.datepick.month-1, this.datepick.day+1)
+      new Date(
+        this.datepick.year,
+        this.datepick.month - 1,
+        this.datepick.day + 1
+      )
     );
-    console.log("new DATE");
-    console.log(this.datepick.year, this.datepick.month-1, this.datepick.day);
-    console.log(new Date(this.datepick.year, this.datepick.month-1, this.datepick.day+1));
+    console.log('new DATE');
+    console.log(this.datepick.year, this.datepick.month - 1, this.datepick.day);
+    console.log(
+      new Date(
+        this.datepick.year,
+        this.datepick.month - 1,
+        this.datepick.day + 1
+      )
+    );
   }
 
   clear() {

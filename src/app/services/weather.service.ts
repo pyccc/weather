@@ -41,4 +41,10 @@ export class WeatherService {
 
     return throwError(() => new Error(errorMessage));
   }
+
+  
+  // if(res.items.length==0){
+  //   console.log("has an empty arr");
+  //   this.getWeather(new Date(startDate.setDate(startDate.getDate()-1)));
+  // }
 }
