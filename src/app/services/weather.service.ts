@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { WeatherDataWrapper } from '../models/weather-data-wrapper';
+import { Forecast } from '../models/forecast';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,17 @@ export class WeatherService {
       .pipe(catchError(this.handleError));
   }
 
+  async emptyItems(startDate: Date){
+    this.getWeather(startDate).subscribe((res)=>{
+      if(res.items.length){
+        return res.items[res.items.length - 1].forecasts.reverse()
+      }
+      else {
+        this.getWeather(new Date(startDate.setDate(startDate.getDate()-1)));
+      }
+    });
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 
@@ -41,10 +53,4 @@ export class WeatherService {
 
     return throwError(() => new Error(errorMessage));
   }
-
-  
-  // if(res.items.length==0){
-  //   console.log("has an empty arr");
-  //   this.getWeather(new Date(startDate.setDate(startDate.getDate()-1)));
-  // }
 }

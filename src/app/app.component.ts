@@ -13,12 +13,15 @@ export class AppComponent {
 
   datepick: NgbDateStruct;
 
+  
   minDate = { year: 2016, month: 4, day: 20 };
   maxDate = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     day: new Date().getDate() + 4,
   };
+
+  placeholder = this.maxDate.year+'-'+this.maxDate.month+'-'+this.maxDate.day
 
   constructor(private weatherService: WeatherService) {}
 
@@ -29,10 +32,6 @@ export class AppComponent {
   }
 
   get30DaysWeather(date: Date) {
-    // while(this.forecasts.length<30){
-    // this.forecasts.concat(this.forecasts);
-    // }
-
     zip(
       this.weatherService.getWeather(
         new Date(date.setDate(date.getDate() - 4))
@@ -84,22 +83,6 @@ export class AppComponent {
           ? res8.items[res8.items.length - 1].forecasts.reverse()
           : []
       );
-      // console.log("res1");
-      // console.log(res1);
-      // console.log("res2");
-      // console.log(res2);
-      // console.log("res3");
-      // console.log(res3);
-      // console.log("res4");
-      // console.log(res4);
-      // console.log("res5");
-      // console.log(res5);
-      // console.log("res6");
-      // console.log(res6);
-      // console.log("res7");
-      // console.log(res7);
-      // console.log("res8");
-      // console.log(res8);
     });
   }
 
@@ -123,6 +106,13 @@ export class AppComponent {
   }
 
   clear() {
+    this.placeholder = "YYYY-MM-DD";
+    this.datepick = {
+      year:0,
+      month:0,
+      day:0,
+    };
     this.forecasts = [];
   }
 }
+

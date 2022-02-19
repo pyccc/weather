@@ -26,7 +26,7 @@
               <div class="input-group">
                 <input
                   class="form-control"
-                  [placeholder]="maxDate.year+'-'+maxDate.month+'-'+maxDate.day"
+                  [placeholder]="placeholder"
                   name="dp"
                   [minDate]="minDate"
                   [maxDate]="maxDate"
@@ -52,7 +52,7 @@
           <button
             type="button"
             class="btn btn-outline-primary btn-lg"
-            (click)="refresh()"
+            (click)="clear()"
           >
             Clear
           </button>
