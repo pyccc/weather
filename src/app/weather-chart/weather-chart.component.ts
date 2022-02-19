@@ -14,7 +14,6 @@ export class WeatherChartComponent implements OnChanges {
   constructor(public weatherService: WeatherService) {}
 
   ngOnChanges() {
-    console.log(this.chartData);
 
     let xCat = [];
     let humidityHigh = [];

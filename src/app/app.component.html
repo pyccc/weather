@@ -17,18 +17,23 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-4">
+          <h4 style="text-align:right">Please input the start date:</h4>
+        </div>
+        <div class="col-lg-4">
           <form class="row row-cols-sm-auto">
             <div class="col-12">
               <div class="input-group">
                 <input
                   class="form-control"
-                  placeholder="yyyy-mm-dd"
+                  [placeholder]="maxDate.year+'-'+maxDate.month+'-'+maxDate.day"
                   name="dp"
                   [minDate]="minDate"
                   [maxDate]="maxDate"
-                  [(ngModel)]="model"
+                  [(ngModel)]="datepick"
                   ngbDatepicker
+                  readonly
+                  (ngModelChange)="changeDate($event)"
                   #d="ngbDatepicker"
                 />
                 <button
@@ -41,15 +46,17 @@
           </form>
 
           <hr />
-          <pre>Model: {{ date | json }}</pre>
+          <!-- <pre>Model: {{ date | json }}</pre> -->
         </div>
-        <button
-          type="button"
-          class="btn btn-outline-primary btn-lg"
-          (click)="refresh()"
-        >
-          Execute
-        </button>
+        <div class="col-lg-4">
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-lg"
+            (click)="refresh()"
+          >
+            Clear
+          </button>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
