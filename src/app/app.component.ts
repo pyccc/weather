@@ -83,20 +83,29 @@ export class AppComponent {
           ? res8.items[res8.items.length - 1].forecasts.reverse()
           : []
       );
+
+      
+      console.log("res1");
+      console.log(res1);
+      console.log("res2");
+      console.log(res2);
+      console.log("res3");
+      console.log(res3);
+      console.log("res4");
+      console.log(res4);
+      console.log("res5");
+      console.log(res5);
+      console.log("res6");
+      console.log(res6);
+      console.log("res7");
+      console.log(res7);
+      console.log("res8");
+      console.log(res8);
     });
   }
 
   changeDate(event: any) {
     this.get30DaysWeather(
-      new Date(
-        this.datepick.year,
-        this.datepick.month - 1,
-        this.datepick.day + 1
-      )
-    );
-    console.log('new DATE');
-    console.log(this.datepick.year, this.datepick.month - 1, this.datepick.day);
-    console.log(
       new Date(
         this.datepick.year,
         this.datepick.month - 1,

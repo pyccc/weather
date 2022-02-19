@@ -27,17 +27,6 @@ export class WeatherService {
       .pipe(catchError(this.handleError));
   }
 
-  async emptyItems(startDate: Date){
-    this.getWeather(startDate).subscribe((res)=>{
-      if(res.items.length){
-        return res.items[res.items.length - 1].forecasts.reverse()
-      }
-      else {
-        this.getWeather(new Date(startDate.setDate(startDate.getDate()-1)));
-      }
-    });
-  }
-
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 
